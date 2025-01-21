@@ -1,0 +1,67 @@
+<div class="h-full flex items-center justify-center coverparentspace">
+  <div class="max-w-md w-full">
+    <div
+      class="border-none md:border border-gray-300 px-4 py-3 mb-8 bg-white rounded-lg shadow-none md:shadow-md"
+    >
+      <h2 class="my-3 text-center text-3xl font-extrabold text-gray-900">
+        Verificación de OTP
+      </h2>
+
+      <ng-container *ngIf="!otpGenerado; else verifyOtpSection">
+        <!-- Sección de Generación de OTP -->
+        <form
+          class="mt-8 space-y-6"
+          (ngSubmit)="generarOTP()"
+          #otpForm="ngForm"
+        >
+          <div class="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label for="identifier" class="block text-sm font-bold mb-2"
+                >Correo electrónico / Número de cuenta</label
+              >
+              <input
+                id="identifier"
+                name="identifier"
+                type="text"
+                [(ngModel)]="identificador"
+                required
+                class="appearance-none rounded-none relative block w-full px-3 py-2 border text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Correo electrónico / Número de cuenta"
+              />
+            </div>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Generar OTP
+            </button>
+          </div>
+        </form>
+      </ng-container>
+
+      <!-- Sección de Verificación de OTP -->
+      <ng-template #verifyOtpSection>
+        <div class="mt-8 space-y-6">
+          <div class="flex justify-center">
+            <ng-otp-input
+              #ngOtpInput
+              (onInputChange)="onOtpChange($event)"
+              [config]="configuracion"
+            ></ng-otp-input>
+          </div>
+          <button
+            type="submit"
+            (click)="verificarOTP()"
+            [disabled]="otp.length !== 6"
+            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-200 disabled:cursor-not-allowed"
+          >
+            Verificar OTP
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

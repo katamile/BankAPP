@@ -1,0 +1,238 @@
+<div class="m-2 flex items-center justify-center coverparentspace">
+  <div class="max-w-md w-full">
+    <div
+      class="border-none md:border border-gray-300 px-4 py-3 mb-8 bg-white rounded-lg shadow-none md:shadow-md"
+      *ngIf="!showRegistrationData"
+    >
+      <h2 class="my-3 text-center text-3xl font-extrabold text-gray-900">
+        Registro
+      </h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="col-span-2">
+            <label for="name" class="block text-sm font-bold mb-2">Nombre:</label>
+            <input
+              formControlName="name"
+              type="text"
+              id="name"
+              autocomplete="name"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.name.invalid && f.name.touched"
+              class="text-red-500 text-sm mt-1"
+            >
+              Por favor, ingrese un nombre válido.
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="email" class="block text-sm font-bold mb-2"
+              >Correo electrónico:</label
+            >
+            <input
+              formControlName="email"
+              type="email"
+              id="email"
+              autocomplete="email"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.email.invalid && f.email.touched"
+              class="text-red-500 text-sm mt-1"
+            >
+              <div *ngIf="f.email.errors?.required">El correo es obligatorio.</div>
+              <div *ngIf="f.email.errors?.email">
+                Por favor, ingrese un correo válido.
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="countryCode" class="block text-sm font-bold mb-2"
+              >Código de país:</label
+            >
+            <lib-country-list
+              formControlName="countryCode"
+              id="countryCode"
+              (onCountryChange)="onCountryChange($event)"
+              class="block w-full border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            >
+            </lib-country-list>
+            <div
+              *ngIf="f.countryCode.invalid && f.countryCode.touched"
+              class="text-red-500 text-sm mt-1"
+            >
+              El país es obligatorio.
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="phoneNumber" class="block text-sm font-bold mb-2"
+              >Número de teléfono:</label
+            >
+            <input
+              formControlName="phoneNumber"
+              type="tel"
+              id="phoneNumber"
+              autocomplete="tel"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.phoneNumber.invalid && f.phoneNumber.touched"
+              class="text-red-500 text-sm mt-1"
+            >
+              <div *ngIf="f.phoneNumber.errors?.required">
+                El número de teléfono es obligatorio.
+              </div>
+              <div *ngIf="f.phoneNumber.errors?.pattern">
+                Por favor, ingrese un número de teléfono válido.
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2">
+            <label for="address" class="block text-sm font-bold mb-2"
+              >Dirección:</label
+            >
+            <input
+              formControlName="address"
+              type="text"
+              id="address"
+              autocomplete="street-address"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.address.invalid && f.address.touched"
+              class="text-red-500 text-sm mt-1"
+            >
+              La dirección es obligatoria.
+            </div>
+          </div>
+          <div class="col-span-1">
+            <label for="password" class="block text-sm font-bold mb-2"
+              >Contraseña:</label
+            >
+            <input
+              formControlName="password"
+              type="password"
+              id="password"
+              autocomplete="new-password"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.password.invalid && f.password.touched"
+              class="block text-red-500 font-medium rounded-lg mt-2 text-sm"
+            >
+              <div *ngIf="f.password.errors?.required">
+                La contraseña es obligatoria.
+              </div>
+              <div *ngIf="f.password.errors?.minlength">
+                La contraseña debe tener al menos 8 caracteres.
+              </div>
+              <div *ngIf="f.password.errors?.maxlength">
+                La contraseña debe tener como máximo 127 caracteres.
+              </div>
+            </div>
+          </div>
+          <div class="col-span-1">
+            <label for="confirmPassword" class="block text-sm font-bold mb-2"
+              >Confirmar contraseña:</label
+            >
+            <input
+              formControlName="confirmPassword"
+              type="password"
+              id="confirmPassword"
+              autocomplete="new-password"
+              class="w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:border-indigo-500"
+            />
+            <div
+              *ngIf="f.confirmPassword.invalid && f.confirmPassword.touched"
+              class="block text-red-500 font-medium rounded-lg mt-2 text-sm"
+            >
+              <div *ngIf="f.confirmPassword.errors?.required">
+                La confirmación de la contraseña es obligatoria.
+              </div>
+              <div *ngIf="f.confirmPassword.errors?.mismatch">
+                Las contraseñas no coinciden.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="text-red-400 text-sm list-disc" *ngIf="f.password?.dirty">
+          <li
+            class="block text-red-500 font-medium rounded-lg mt-2"
+            *ngIf="!f.password?.value?.match('^(?=.*[A-Z])')"
+          >
+            Al menos una letra mayúscula.
+          </li>
+          <li
+            class="block text-red-500 font-medium rounded-lg mt-2"
+            *ngIf="!f.password?.value?.match('(?=.*[a-z])')"
+          >
+            Al menos una letra minúscula.
+          </li>
+          <li
+            class="block text-red-500 font-medium rounded-lg mt-2"
+            *ngIf="!f.password?.value?.match('(.*[0-9].*)')"
+          >
+            Al menos un número.
+          </li>
+          <li
+            class="block text-red-500 font-medium rounded-lg mt-2"
+            *ngIf="!f.password?.value?.match('(?=.*[^A-Za-z0-9])')"
+          >
+            Al menos un carácter especial.
+          </li>
+          <li
+            class="block text-red-500 font-medium rounded-lg mt-2"
+            *ngIf="!f.password?.value?.match('.{8,}')"
+          >
+            Al menos 8 caracteres.
+          </li>
+        </ul>
+
+        <div class="mt-4 flex items-center justify-center">
+          <button
+            type="submit"
+            [disabled]="registerForm.invalid"
+            class="group relative w-full flex justify-center py-2 px-4 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Registrar
+          </button>
+        </div>
+      </form>
+    </div>
+    <div
+      class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow"
+      *ngIf="showRegistrationData"
+    >
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center"
+      >
+        ¡Registro Exitoso!
+      </h5>
+      <p class="mb-3 font-normal text-gray-700">
+        Nombre:
+        <span class="font-medium">{{ registrationData.name || "-" }}</span>
+      </p>
+      <p class="mb-3 font-normal text-gray-700">
+        Correo electrónico:<span class="font-medium"> {{ registrationData.email }}</span>
+      </p>
+      <p class="mb-3 font-normal text-gray-700">
+        Número de cuenta: :<span class="font-medium">{{
+          registrationData.accountNumber
+        }}</span>
+      </p>
+      <p class="mb-3 font-normal text-gray-700">
+        Sucursal: <span class="font-medium">{{ registrationData.branch }}</span>
+      </p>
+      <div class="mt-4 flex items-center justify-center">
+        <a
+          routerLink="/login"
+          type="button"
+          class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline cursor-pointer"
+          (click)="showRegistrationData = false"
+          >Continuar al inicio de sesión</a
+        >
+      </div>
+    </div>
+  </div>
+</div>
