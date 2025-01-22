@@ -1,5 +1,4 @@
 # Ignore Maven & Gradle directories
-target/
 build/
 
 # Ignore Maven & Gradle specific files
@@ -53,4 +52,11 @@ node_modules/
 
 # Test reports
 test-output/
-target/
+
+# Ignorar toda la carpeta target
+/target/test-classes/com/webapp/bankingportal
+/target/maven-status
+/target/maven-archiver
+/target/generated-test-sources
+/target/generated-sources
+/target/classes
