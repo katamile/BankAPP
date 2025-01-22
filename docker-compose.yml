@@ -1,0 +1,40 @@
+services:
+  api:
+    build:
+      context: ./BankingPortal-API
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/bankingapp
+      SPRING_DATASOURCE_USERNAME: bankapp_user
+      SPRING_DATASOURCE_PASSWORD: 12345
+    depends_on:
+      - db
+    networks:
+      - default
+
+  frontend:
+    build:
+      context: ./BankingPortal-UI
+    ports:
+      - "4200:80"
+
+  db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_DATABASE: bankingapp
+      MYSQL_USER: bankapp_user
+      MYSQL_PASSWORD: 12345
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+networks:
+  default:
+    driver: bridge 
+    
+volumes:
+  db_data:
